@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nashrah Makeup Empire | Official Portfolio</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #faf7f5;
+            --text: #1a1a1a;
+            --accent: #b58d3d;
+            --white: #ffffff;
+            --dark: #111111;
+            --gold: #d4af37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom Dual Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--accent);
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease-out;
+            transform: translate(-50%, -50%);
+        }
+
+        a:hover~.cursor-outline,
+        button:hover~.cursor-outline {
+            transform: translate(-50%, -50%) scale(1.5);
+            background: rgba(181, 141, 61, 0.1);
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Bodoni Moda', serif;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .serif-italic {
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            transition: background 0.3s, padding 0.3s;
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+        }
+
+        .logo {
+            font-family: 'Bodoni Moda';
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .site-nav {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .site-nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .site-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .site-nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: var(--white);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            transform: translateY(-100%);
+            transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+
+        .mobile-menu a {
+            font-family: 'Bodoni Moda';
+            font-size: 2rem;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=2600&auto=format&fit=crop') center/cover no-repeat;
+            position: relative;
+            color: white;
+            text-align: center;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s forwards 0.5s;
+        }
+
+        .hero-title {
+            font-size: 5vw;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 1px solid white;
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--white);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--dark);
+        }
+
+        .btn:hover::before {
+            width: 100%;
+        }
+
+        .btn-dark {
+            border-color: var(--dark);
+            color: var(--dark);
+        }
+
+        .btn-dark::before {
+            background: var(--dark);
+        }
+
+        .btn-dark:hover {
+            color: white;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styling */
+        section {
+            padding: 6rem 0;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-img {
+            width: 100%;
+            height: 600px;
+            background: url('https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=1200') center/cover;
+            position: relative;
+        }
+
+        /* Parallax effect substitute */
+        .about-img::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--accent);
+            z-index: -1;
+            transition: transform 0.3s;
+        }
+
+        .about-grid:hover .about-img::after {
+            transform: translate(10px, 10px);
+        }
+
+        /* Services */
+        .services-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            padding: 2rem;
+            background: white;
+            text-align: center;
+            border: 1px solid #eee;
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border-color: var(--accent);
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-price {
+            font-family: 'Bodoni Moda';
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            color: var(--dark);
+        }
+
+        /* Portfolio Preview */
+        .portfolio-mosaic {
+            display: grid;
+            grid-template-areas:
+                "large small1 small2"
+                "large small3 small4";
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: 300px 300px;
+            gap: 1rem;
+        }
+
+        .mosaic-item {
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+
+        .mosaic-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .mosaic-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .mosaic-1 {
+            grid-area: large;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .mosaic-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay span {
+            color: white;
+            font-family: 'Bodoni Moda';
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        /* Booking */
+        .booking-section {
+            background: #f4f4f4;
+        }
+
+        .booking-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background: white;
+            margin-bottom: 1rem;
+            font-family: 'Inter';
+        }
+
+        .booking-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .socials a {
+            color: white;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        .socials a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        /* Quality of Life */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .site-nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-mosaic {
+                grid-template-columns: 1fr 1fr;
+                grid-template-areas: "large large" "small1 small2" "small3 small4";
+                grid-template-rows: auto;
+            }
+
+            .services-list {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-menu" onclick="toggleMenu()">&times;</button>
+        <a href="#hero" onclick="toggleMenu()">Home</a>
+        <a href="#about" onclick="toggleMenu()">About</a>
+        <a href="#services" onclick="toggleMenu()">Services</a>
+        <a href="gallery.html" onclick="toggleMenu()">Gallery</a>
+        <a href="#booking" onclick="toggleMenu()">Contact</a>
+    </div>
+
+    <header id="header">
+        <div class="nav-container">
+            <a href="#" class="logo">NASHRAH</a>
+            <nav class="site-nav">
+                <a href="#hero">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="#booking">Contact</a>
+            </nav>
+            <button class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <div id="hero">
+        <div class="hero-content">
+            <p class="hero-subtitle">EST. 2024</p>
+            <h1 class="hero-title">ELEVATING<br><span class="serif-italic">BEAUTY</span></h1>
+            <a href="#about" class="btn">Discover the Artistry</a>
+        </div>
+    </div>
+
+    <section id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-img"></div>
+                <div>
+                    <p class="subtitle">The Muse</p>
+                    <h2>Empire <span class="serif-italic">State of Mind</span></h2>
+                    <p style="margin-bottom: 2rem; opacity: 0.8;">
+                        Nashrah Makeup Empire is not just about applying makeup; it's about sculpting confidence and
+                        revealing the inner muse.
+                        With a keen eye for editorial fashion and a heart for bridal elegance, we blend modern trends
+                        with timeless techniques.
+                    </p>
+                    <p style="margin-bottom: 2rem; opacity: 0.8;">
+                        Our philosophy is simple: Every face tells a story, and we are here to highlight the most
+                        beautiful chapters.
+                    </p>
+                    <a href="gallery.html" class="btn btn-dark">View Portfolio</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" style="background: white;">
+        <div class="container">
+            <div class="text-center">
+                <p class="subtitle">What We Offer</p>
+                <h2>Curated <span class="serif-italic">Experiences</span></h2>
+            </div>
+
+            <div class="services-list">
+                <div class="service-card">
+                    <i class="fas fa-crown service-icon"></i>
+                    <h3>Bridal Lux</h3>
+                    <p style="font-size: 0.9rem; opacity: 0.7;">Complete bridal consultation, skin prep, and
+                        long-lasting HD makeup for your special day.</p>
+                    <div class="service-price">From $450</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-camera-retro service-icon"></i>
+                    <h3>Editorial</h3>
+                    <p style="font-size: 0.9rem; opacity: 0.7;">High-fashion, avant-garde looks for photoshoots,
+                        magazines, and runway shows.</p>
+                    <div class="service-price">Custom Quote</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-graduation-cap service-icon"></i>
+                    <h3>Masterclass</h3>
+                    <p style="font-size: 0.9rem; opacity: 0.7;">1-on-1 or group sessions learning the signature Nashrah
+                        techniques and product knowledge.</p>
+                    <div class="service-price">$200 / Session</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <p class="subtitle">Selected Works</p>
+                <h2>Visual <span class="serif-italic">Diary</span></h2>
+            </div>
+
+            <div class="portfolio-mosaic">
+                <!-- Large Item -->
+                <a href="gallery.html" class="mosaic-item mosaic-1">
+                    <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=1200" alt="Model">
+                    <div class="overlay"><span>EDITORIAL</span></div>
+                </a>
+                <!-- Small Items -->
+                <a href="gallery.html" class="mosaic-item">
+                    <img src="https://images.unsplash.com/photo-1594465919760-441fe5908ab0?q=80&w=800" alt="Bridal">
+                    <div class="overlay"><span>BRIDAL</span></div>
+                </a>
+                <a href="gallery.html" class="mosaic-item">
+                    <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=800" alt="Creative">
+                    <div class="overlay"><span>CREATIVE</span></div>
+                </a>
+                <a href="gallery.html" class="mosaic-item">
+                    <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?q=80&w=800" alt="Fashion">
+                    <div class="overlay"><span>FASHION</span></div>
+                </a>
+                <a href="gallery.html" class="mosaic-item">
+                    <img src="https://images.unsplash.com/photo-1526045431048-f857369baa09?q=80&w=800" alt="Glam">
+                    <div class="overlay"><span>GLAM</span></div>
+                </a>
+            </div>
+
+            <div class="text-center" style="margin-top: 3rem;">
+                <a href="gallery.html" class="btn btn-dark">View Full Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="booking" class="booking-section">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <p class="subtitle">Get in Touch</p>
+                <h2>Secure Your <span class="serif-italic">Date</span></h2>
+            </div>
+
+            <div class="booking-container">
+                <!-- Left Column: Calendar -->
+                <div class="calendar-card">
+                    <h3 style="text-align:center; margin-bottom:1.5rem; font-size:1.2rem;">Select Date(s)</h3>
+                    <div class="calendar-header">
+                        <button id="prevMonth" aria-label="Previous Month">❮</button>
+                        <span id="monthYear"></span>
+                        <button id="nextMonth" aria-label="Next Month">❯</button>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+
+                    <div class="selected-dates-container">
+                        <h4>Selected Dates:</h4>
+                        <div id="selectedDatesList" class="selected-list">No dates selected</div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Form -->
+                <form class="booking-form" action="https://formspree.io/f/xwvlpyev" method="POST" id="bookingForm">
+                    <input type="hidden" name="selected_dates" id="hiddenDates">
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <input type="text" name="name" class="booking-input" placeholder="Your Name" required>
+                        <input type="email" name="email" class="booking-input" placeholder="Your Email" required>
+                    </div>
+                    <input type="text" name="phone" class="booking-input" placeholder="Phone Number">
+                    <select name="service" class="booking-input">
+                        <option value="" disabled selected>Select Service...</option>
+                        <option>Bridal Makeup</option>
+                        <option>Editorial / Shoot</option>
+                        <option>Occasion Makeup</option>
+                        <option>Masterclass</option>
+                    </select>
+                    <textarea name="message" class="booking-input" rows="4"
+                        placeholder="Tell us more about your event details..."></textarea>
+
+                    <button type="submit" class="btn btn-dark" style="width: 100%; border: none; cursor: pointer;">Send
+                        Inquiry</button>
+                    <div id="status-msg" style="margin-top: 1rem; text-align: center;"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h2 style="font-size: 2.5rem;">NASHRAH</h2>
+            <p style="opacity: 0.6; margin-bottom: 2rem; letter-spacing: 2px; font-size: 0.8rem;">MAKEUP EMPIRE &copy;
+                2024</p>
+
+            <div class="socials">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+
+            <p style="font-size: 0.7rem; opacity: 0.4;">DESIGNED BY ANTIGRAVITY</p>
+        </div>
+    </footer>
+
+    <style>
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        /* Calendar Styles */
+        .calendar-card {
+            background: white;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-family: 'Bodoni Moda';
+            font-size: 1.2rem;
+        }
+
+        .calendar-header button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--accent);
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+            border-radius: 50%;
+            transition: 0.2s;
+        }
+
+        .calendar-day:hover:not(.disabled) {
+            background: #f0f0f0;
+        }
+
+        .calendar-day.selected {
+            background: var(--accent);
+            color: white;
+        }
+
+        .calendar-day.disabled {
+            color: #ddd;
+            cursor: not-allowed;
+        }
+
+        .calendar-day.empty {
+            cursor: default;
+        }
+
+        .selected-dates-container {
+            margin-top: 2rem;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+        }
+
+        .selected-list {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        @media (max-width: 900px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        // Custom Cursor Logic
+        const dot = document.querySelector(".cursor-dot");
+        const outline = document.querySelector(".cursor-outline");
+
+        window.addEventListener("mousemove", (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            dot.style.left = `${posX}px`;
+            dot.style.top = `${posY}px`;
+
+            outline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Calendar Logic
+        const calendarGrid = document.getElementById('calendarGrid');
+        const monthYearLabel = document.getElementById('monthYear');
+        const prevBtn = document.getElementById('prevMonth');
+        const nextBtn = document.getElementById('nextMonth');
+        const selectedList = document.getElementById('selectedDatesList');
+        const hiddenInput = document.getElementById('hiddenDates');
+
+        let currentDate = new Date();
+        let selectedDates = [];
+
+        function renderCalendar() {
+            calendarGrid.innerHTML = '';
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date(); today.setHours(0, 0, 0, 0);
+
+            monthYearLabel.textContent = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+            // Empty slots
+            for (let i = 0; i < firstDay; i++) {
+                const empty = document.createElement('div');
+                empty.className = 'calendar-day empty';
+                calendarGrid.appendChild(empty);
+            }
+
+            // Days
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day';
+                dayEl.textContent = i;
+
+                const dateObj = new Date(year, month, i);
+                const dateString = dateObj.toDateString();
+
+                if (dateObj < today) {
+                    dayEl.classList.add('disabled');
+                } else {
+                    dayEl.onclick = () => toggleDate(dateObj, dayEl);
+                    if (selectedDates.find(d => d.toDateString() === dateString)) {
+                        dayEl.classList.add('selected');
+                    }
+                }
+                calendarGrid.appendChild(dayEl);
+            }
+        }
+
+        function toggleDate(date, el) {
+            const dateString = date.toDateString();
+            const index = selectedDates.findIndex(d => d.toDateString() === dateString);
+
+            if (index > -1) {
+                selectedDates.splice(index, 1);
+                el.classList.remove('selected');
+            } else {
+                selectedDates.push(date);
+                el.classList.add('selected');
+            }
+            updateSelectedUI();
+        }
+
+        function updateSelectedUI() {
+            selectedDates.sort((a, b) => a - b);
+            if (selectedDates.length === 0) {
+                selectedList.textContent = "No dates selected";
+                hiddenInput.value = "";
+            } else {
+                selectedList.textContent = selectedDates.map(d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })).join(', ');
+                hiddenInput.value = selectedDates.map(d => d.toISOString().split('T')[0]).join(', ');
+            }
+        }
+
+        prevBtn.onclick = () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); };
+        nextBtn.onclick = () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); };
+
+        renderCalendar();
+
+        // Form Handling
+        const form = document.getElementById("bookingForm");
+        const status = document.getElementById("status-msg");
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            if (selectedDates.length === 0) {
+                status.innerHTML = "Please select at least one date from the calendar.";
+                status.style.color = "red";
+                return;
+            }
+
+            status.innerHTML = "Sending...";
+            status.style.color = "inherit";
+
+            const data = new FormData(form);
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    status.innerHTML = "Thank you! We will be in touch shortly.";
+                    form.reset();
+                    selectedDates = [];
+                    renderCalendar();
+                    updateSelectedUI();
+                } else {
+                    status.innerHTML = "Oops! There was a problem submitting your form.";
+                }
+            } catch (error) {
+                status.innerHTML = "Network error. Please try again.";
+            }
+        };
+    </script>
+</body>
+
+</html>
